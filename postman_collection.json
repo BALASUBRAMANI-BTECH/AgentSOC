@@ -1,0 +1,218 @@
+{
+  "info": {
+    "name": "AgentSOC API Collection",
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "description": "Comprehensive API collection for AgentSOC Autonomous AI-Powered Security Operations Center",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login as Admin (Locked Password 24282428)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"24282428\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/auth/login", "host": ["{{base_url}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "Login as Analyst (Any Other Password)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"analyst\",\n  \"password\": \"analyst_clearance\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/auth/login", "host": ["{{base_url}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "Get Current User Profile (/auth/me)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{admin_token}}" }],
+            "url": { "raw": "{{base_url}}/auth/me", "host": ["{{base_url}}"], "path": ["auth", "me"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Security Events",
+      "item": [
+        {
+          "name": "Ingest Security Event",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"source_ip\": \"192.168.1.50\",\n  \"destination_ip\": \"10.0.0.5\",\n  \"username\": \"admin\",\n  \"event_type\": \"login_failed\",\n  \"severity\": \"HIGH\",\n  \"message\": \"SSH authentication credential failure\",\n  \"metadata\": { \"service\": \"ssh\", \"port\": 22 }\n}"
+            },
+            "url": { "raw": "{{base_url}}/events", "host": ["{{base_url}}"], "path": ["events"] }
+          }
+        },
+        {
+          "name": "Get Events Telemetry",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/events?limit=50", "host": ["{{base_url}}"], "path": ["events"], "query": [{ "key": "limit", "value": "50" }] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Incidents & Forensics",
+      "item": [
+        {
+          "name": "List All Incidents",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/incidents", "host": ["{{base_url}}"], "path": ["incidents"] }
+          }
+        },
+        {
+          "name": "Get Incident Detail",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/incidents/{{incident_id}}", "host": ["{{base_url}}"], "path": ["incidents", "{{incident_id}}"] }
+          }
+        },
+        {
+          "name": "Get Incident Timeline",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/incidents/{{incident_id}}/timeline", "host": ["{{base_url}}"], "path": ["incidents", "{{incident_id}}", "timeline"] }
+          }
+        },
+        {
+          "name": "Get AI Investigation Report",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/incidents/{{incident_id}}/investigation", "host": ["{{base_url}}"], "path": ["incidents", "{{incident_id}}", "investigation"] }
+          }
+        },
+        {
+          "name": "Get Risk Score Breakdown",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/incidents/{{incident_id}}/risk", "host": ["{{base_url}}"], "path": ["incidents", "{{incident_id}}", "risk"] }
+          }
+        },
+        {
+          "name": "Get MITRE ATT&CK Mapping",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/incidents/{{incident_id}}/mitre", "host": ["{{base_url}}"], "path": ["incidents", "{{incident_id}}", "mitre"] }
+          }
+        },
+        {
+          "name": "Update Incident Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"CONTAINED\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/incidents/{{incident_id}}/status", "host": ["{{base_url}}"], "path": ["incidents", "{{incident_id}}", "status"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Containment & Response",
+      "item": [
+        {
+          "name": "Execute Containment (Admin Auth Required)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action_type\": \"BLOCK_IP\",\n  \"target\": \"192.168.1.50\",\n  \"simulated\": true\n}"
+            },
+            "url": { "raw": "{{base_url}}/incidents/{{incident_id}}/response", "host": ["{{base_url}}"], "path": ["incidents", "{{incident_id}}", "response"] }
+          }
+        },
+        {
+          "name": "Get Incident Responses",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/incidents/{{incident_id}}/responses", "host": ["{{base_url}}"], "path": ["incidents", "{{incident_id}}", "responses"] }
+          }
+        },
+        {
+          "name": "Get All Responses",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/responses", "host": ["{{base_url}}"], "path": ["responses"] }
+          }
+        },
+        {
+          "name": "Get Global Audit Trail",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/audit", "host": ["{{base_url}}"], "path": ["audit"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Copilot & Stats",
+      "item": [
+        {
+          "name": "AI Copilot Chat",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"Explain the brute force attack and recommend containment steps\",\n  \"incident_id\": \"{{incident_id}}\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/assistant/chat", "host": ["{{base_url}}"], "path": ["assistant", "chat"] }
+          }
+        },
+        {
+          "name": "AI Copilot Suggestions",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/assistant/suggestions", "host": ["{{base_url}}"], "path": ["assistant", "suggestions"] }
+          }
+        },
+        {
+          "name": "Dashboard Summary Stats",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/dashboard/stats", "host": ["{{base_url}}"], "path": ["dashboard", "stats"] }
+          }
+        },
+        {
+          "name": "Backend Health Check",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/health", "host": ["{{base_url}}"], "path": ["health"] }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "base_url", "value": "http://127.0.0.1:8000" },
+    { "key": "admin_token", "value": "" },
+    { "key": "incident_id", "value": "INC-0001" }
+  ]
+}
+

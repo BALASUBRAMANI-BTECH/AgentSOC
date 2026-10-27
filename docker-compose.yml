@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: agentsoc-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017
+      - MONGODB_DB=agentsoc
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - JWT_SECRET=agentsoc-cyber-sec-super-secret-key-2026
+      - ENVIRONMENT=production
+    depends_on:
+      - mongodb
+      - redis
+    restart: unless-stopped
+
+  mongodb:
+    image: mongo:7.0
+    container_name: agentsoc-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: agentsoc-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: agentsoc-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:
+  redis_data:
+  ollama_models:
+

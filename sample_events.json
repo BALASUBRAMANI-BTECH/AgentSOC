@@ -1,0 +1,102 @@
+[
+  {
+    "source_ip": "10.0.1.15",
+    "destination_ip": "10.0.0.5",
+    "username": "sarah_analyst",
+    "event_type": "login_success",
+    "severity": "LOW",
+    "message": "SSH session established successfully with ed25519 key",
+    "metadata": { "service": "ssh", "auth_method": "publickey", "session_id": "ssh_98234" }
+  },
+  {
+    "source_ip": "10.0.1.22",
+    "destination_ip": "10.0.0.8",
+    "username": "dev_ops",
+    "event_type": "login_success",
+    "severity": "LOW",
+    "message": "Web portal authentication accepted via MFA token",
+    "metadata": { "service": "web", "mfa": true }
+  },
+  {
+    "source_ip": "192.168.1.50",
+    "destination_ip": "10.0.0.5",
+    "username": "admin",
+    "event_type": "login_failed",
+    "severity": "HIGH",
+    "message": "SSH authentication failure - password rejected for root/admin",
+    "metadata": { "attempt": 1, "protocol": "ssh", "port": 22 }
+  },
+  {
+    "source_ip": "192.168.1.50",
+    "destination_ip": "10.0.0.5",
+    "username": "admin",
+    "event_type": "login_failed",
+    "severity": "HIGH",
+    "message": "SSH authentication failure - password rejected for root/admin",
+    "metadata": { "attempt": 2, "protocol": "ssh", "port": 22 }
+  },
+  {
+    "source_ip": "192.168.1.50",
+    "destination_ip": "10.0.0.5",
+    "username": "admin",
+    "event_type": "login_failed",
+    "severity": "HIGH",
+    "message": "SSH authentication failure - password rejected for root/admin",
+    "metadata": { "attempt": 3, "protocol": "ssh", "port": 22 }
+  },
+  {
+    "source_ip": "192.168.1.50",
+    "destination_ip": "10.0.0.5",
+    "username": "admin",
+    "event_type": "login_failed",
+    "severity": "HIGH",
+    "message": "SSH authentication failure - password rejected for root/admin",
+    "metadata": { "attempt": 4, "protocol": "ssh", "port": 22 }
+  },
+  {
+    "source_ip": "192.168.1.50",
+    "destination_ip": "10.0.0.5",
+    "username": "admin",
+    "event_type": "login_failed",
+    "severity": "HIGH",
+    "message": "SSH authentication failure - password rejected for root/admin",
+    "metadata": { "attempt": 5, "protocol": "ssh", "port": 22 }
+  },
+  {
+    "source_ip": "192.168.1.50",
+    "destination_ip": "10.0.0.5",
+    "username": "admin",
+    "event_type": "login_failed",
+    "severity": "HIGH",
+    "message": "SSH authentication failure - password rejected for root/admin",
+    "metadata": { "attempt": 6, "protocol": "ssh", "port": 22 }
+  },
+  {
+    "source_ip": "185.220.101.5",
+    "destination_ip": "10.0.0.2",
+    "username": "guest",
+    "event_type": "malicious_ip_access",
+    "severity": "CRITICAL",
+    "message": "Inbound connection from known Tor exit relay node flagged on threat intel list",
+    "metadata": { "abuse_score": 98, "is_tor": true, "asn": "AS200052" }
+  },
+  {
+    "source_ip": "10.10.40.88",
+    "destination_ip": "10.0.0.1",
+    "username": "unknown",
+    "event_type": "port_scan",
+    "severity": "MEDIUM",
+    "message": "TCP SYN packet burst detected across ports 21, 22, 80, 443, 3306, 8080",
+    "metadata": { "scanned_ports": [21, 22, 80, 443, 3306, 8080], "flags": "SYN" }
+  },
+  {
+    "source_ip": "10.0.1.99",
+    "destination_ip": "10.0.0.5",
+    "username": "service_account",
+    "event_type": "privilege_escalation",
+    "severity": "HIGH",
+    "message": "Unauthorized sudoers modification attempt detected in auditd log",
+    "metadata": { "command": "sudo visudo", "exit_code": 1 }
+  }
+]
+
